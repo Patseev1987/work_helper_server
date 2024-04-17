@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: bogdan
+    password: Bogdan3622897
+    url: jdbc:mysql://109.196.164.168:3306/bogdan_db
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        dialect:
+          MySQLDialect: org.hibernate.dialect.MySQLDialect
