@@ -9,16 +9,19 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "workerTable")
+@Table(name = "workers_table")
 public class Worker {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
     private String patronymic;
     @Enumerated(EnumType.STRING)
     private WorkerType type;
+    @Column(name = "join_date")
     private LocalDate joinDate;
     @Enumerated(EnumType.STRING)
     private Department department;
