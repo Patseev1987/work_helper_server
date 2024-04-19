@@ -7,15 +7,18 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table (name = "storageRecordTable")
-@IdClass(StorageRecordId.class)
+@Table(name = "storage_record_table")
+
 public class StorageRecord {
     @Id
-    @Column(name = "tool_code")
-    private String toolCode;
-    @Id
-    @Column (name = "worker_id")
-    private Long workerId;
-    @Column (name = "amount", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "tool_code")
+    private Tool tool;
+    @ManyToOne
+    @JoinColumn(name = "worker_id")
+    private Worker worker;
+    @Column(name = "amount")
     private Integer amount;
 }

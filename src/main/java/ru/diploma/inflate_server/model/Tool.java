@@ -26,7 +26,7 @@ public class Tool {
             @AttributeOverride( name = "row", column = @Column(name = "place_row"))
     })
     private Place place;
-    @Enumerated
+    @Enumerated (EnumType.STRING)
     private ToolType type;
     @Column(name = "control_date")
     private LocalDate controlDate;

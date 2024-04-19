@@ -10,3 +10,6 @@ spring:
         show_sql: true
         dialect:
           MySQLDialect: org.hibernate.dialect.MySQLDialect
+
+server:
+  port: 1337
