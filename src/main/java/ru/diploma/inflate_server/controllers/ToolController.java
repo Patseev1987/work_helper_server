@@ -21,7 +21,7 @@ public class ToolController {
     }
 
     @GetMapping("/tools/code")
-    public List<Tool> getToolByCodeLike(@RequestParam String code) {
+    public List<Tool> getToolByCodeLike(@RequestParam(name = "code") String code) {
        return toolService.getToolByCodeLike(code);
     }
 }

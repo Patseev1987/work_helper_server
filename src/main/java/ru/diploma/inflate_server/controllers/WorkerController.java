@@ -16,8 +16,8 @@ public class WorkerController {
 
     @GetMapping("/check_login")
     public Worker checkLogin(
-            @RequestParam("login") String login,
-            @RequestParam("password") String password
+            @RequestParam(name = "login") String login,
+            @RequestParam(name = "password") String password
     ) {
         return workerService.checkLogin(login, password);
     }
@@ -28,12 +28,12 @@ public class WorkerController {
     }
 
     @GetMapping("/storage_worker_by_department")
-    public Worker getStorageWorkerByDepartment(@RequestParam Department department){
+    public Worker getStorageWorkerByDepartment(@RequestParam(name = "department") Department department){
         return workerService.getStorageWorkerByDepartment(department);
     }
 
     @GetMapping("/workers_by_department")
-    public List<Worker> getWorkersByDepartment(@RequestParam Department department){
+    public List<Worker> getWorkersByDepartment(@RequestParam(name = "department") Department department){
         return workerService.getWorkersByDepartment(department);
     }
 

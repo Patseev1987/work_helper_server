@@ -31,7 +31,7 @@ public class TransactionController {
 
     @GetMapping("/transactions/worker")
     public List<Transaction> getTransactionsBySurname(
-            @RequestParam("workerId") Long workerId,
+            @RequestParam(name = "workerId") Long workerId,
             @RequestParam(value = "page",defaultValue = "0") Integer page
     ) {
         return transactionService.getTransactionsBySurnameSenderAndReceiver(workerId,page);
@@ -39,8 +39,8 @@ public class TransactionController {
 
     @GetMapping("/transactions/decommissionedTools")
     public List<Transaction> getDecommissionedTools(
-            @RequestParam("senderDepartment") Department senderDepartment,
-            @RequestParam(value = "page",defaultValue = "0") Integer page
+            @RequestParam(name = "senderDepartment") Department senderDepartment,
+            @RequestParam(name = "page",defaultValue = "0") Integer page
     ) {
         return transactionService.getTransactionsBySenderDepartmentAndReceiverDepartment(
                 senderDepartment, STORAGE_OF_DECOMMISSIONED_TOOLS,page
@@ -49,8 +49,8 @@ public class TransactionController {
 
     @GetMapping("/transactions/toSharpen")
     public List<Transaction> getFromSharpen(
-            @RequestParam("senderDepartment") Department senderDepartment,
-            @RequestParam(value = "page",defaultValue = "0") Integer page
+            @RequestParam(name = "senderDepartment") Department senderDepartment,
+            @RequestParam(name = "page",defaultValue = "0") Integer page
     ) {
         return transactionService.getTransactionsBySenderDepartmentAndReceiverDepartment(
                 senderDepartment, SHARPENING,page
@@ -59,8 +59,8 @@ public class TransactionController {
 
     @GetMapping("/transactions/fromSharpen")
     public List<Transaction> getToSharpen(
-            @RequestParam("receiverDepartment") Department receiverDepartment,
-            @RequestParam(value = "page",defaultValue = "0") Integer page
+            @RequestParam(name = "receiverDepartment") Department receiverDepartment,
+            @RequestParam(name = "page",defaultValue = "0") Integer page
     ) {
         return transactionService.getTransactionsBySenderDepartmentAndReceiverDepartment(
                 SHARPENING, receiverDepartment,page
