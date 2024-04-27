@@ -1,12 +1,9 @@
 package ru.diploma.inflate_server.controllers;
 
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.diploma.inflate_server.model.Worker;
+import ru.diploma.inflate_server.model.enums.Department;
 import ru.diploma.inflate_server.services.WorkerService;
 
 import java.util.List;
@@ -29,4 +26,15 @@ public class WorkerController {
     public List<Worker> getAllWorkers() {
         return workerService.getAllWorkers();
     }
+
+    @GetMapping("/storage_worker_by_department")
+    public Worker getStorageWorkerByDepartment(@RequestParam Department department){
+        return workerService.getStorageWorkerByDepartment(department);
+    }
+
+    @GetMapping("/workers_by_department")
+    public List<Worker> getWorkersByDepartment(@RequestParam Department department){
+        return workerService.getWorkersByDepartment(department);
+    }
+
 }

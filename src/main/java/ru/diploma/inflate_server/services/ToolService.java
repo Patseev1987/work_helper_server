@@ -19,4 +19,8 @@ public class ToolService {
     public List<Tool> getAllTools() {
         return toolRepository.findAll();
     }
+
+    public List<Tool> getToolByCodeLike(String code) {
+        return toolRepository.findAllByCodeLike(code);
+    }
 }

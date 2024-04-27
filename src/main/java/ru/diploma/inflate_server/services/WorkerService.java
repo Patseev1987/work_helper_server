@@ -44,4 +44,13 @@ public class WorkerService {
         worker.setPatronymic("");
         return worker;
     }
+
+    public Worker getStorageWorkerByDepartment(Department department) {
+        return workerRepository.findStorageWorkerByDepartment(department).orElseThrow();
+    }
+
+
+    public List<Worker> getWorkersByDepartment(Department department) {
+        return workerRepository.findAllWorkersByDepartment(department);
+    }
 }

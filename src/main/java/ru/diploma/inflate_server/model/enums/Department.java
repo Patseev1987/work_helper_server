@@ -8,4 +8,7 @@ public enum Department {
     DEPARTMENT_41,
     DEPARTMENT_17,
     DEPARTMENT_28,
+    SHARPENING,
+    STORAGE_OF_DECOMMISSIONED_TOOLS
+
 }

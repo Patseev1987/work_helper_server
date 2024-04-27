@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -22,4 +24,6 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "tool_code")
     private Tool tool;
+    @Column(name = "transaction_date")
+    private LocalDate transactionDate;
 }
