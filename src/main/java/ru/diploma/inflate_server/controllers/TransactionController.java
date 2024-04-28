@@ -7,10 +7,12 @@ import ru.diploma.inflate_server.model.enums.Department;
 import ru.diploma.inflate_server.services.TransactionService;
 import ru.diploma.inflate_server.webEntities.TransactionWEB;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-import static ru.diploma.inflate_server.model.enums.Department.SHARPENING;
-import static ru.diploma.inflate_server.model.enums.Department.STORAGE_OF_DECOMMISSIONED_TOOLS;
+import static ru.diploma.inflate_server.model.enums.Department.*;
 
 @RestController
 @RequestMapping("/api")
@@ -37,34 +39,22 @@ public class TransactionController {
         return transactionService.getTransactionsBySurnameSenderAndReceiver(workerId,page);
     }
 
-    @GetMapping("/transactions/decommissionedTools")
+    @GetMapping("/transactions/actionWithAnotherDepartments")
     public List<Transaction> getDecommissionedTools(
-            @RequestParam(name = "senderDepartment") Department senderDepartment,
-            @RequestParam(name = "page",defaultValue = "0") Integer page
+            @RequestParam(name = "anotherDepartment") Department anotherDepartment,
+            @RequestParam(name = "page",defaultValue = "0") Integer page,
+            @RequestParam(name = "toolCode", defaultValue = "") String toolCode
     ) {
-        return transactionService.getTransactionsBySenderDepartmentAndReceiverDepartment(
-                senderDepartment, STORAGE_OF_DECOMMISSIONED_TOOLS,page
-        );
+        if (anotherDepartment == STORAGE_OF_DECOMMISSIONED_TOOLS) {
+            return transactionService.getTransactionsBySenderDepartmentAndReceiverDepartment(
+                    DEPARTMENT_19, STORAGE_OF_DECOMMISSIONED_TOOLS,page,toolCode
+            );
+        } else if (anotherDepartment == SHARPENING) {
+            return transactionService.getTransactionsWithSharpening(toolCode,page);
+        }else {
+            return transactionService.getTransactionsBySenderDepartmentAndReceiverDepartment(
+                    MAIN_STORAGE, DEPARTMENT_19,page,toolCode
+            );
+        }
     }
-
-    @GetMapping("/transactions/toSharpen")
-    public List<Transaction> getFromSharpen(
-            @RequestParam(name = "senderDepartment") Department senderDepartment,
-            @RequestParam(name = "page",defaultValue = "0") Integer page
-    ) {
-        return transactionService.getTransactionsBySenderDepartmentAndReceiverDepartment(
-                senderDepartment, SHARPENING,page
-        );
-    }
-
-    @GetMapping("/transactions/fromSharpen")
-    public List<Transaction> getToSharpen(
-            @RequestParam(name = "receiverDepartment") Department receiverDepartment,
-            @RequestParam(name = "page",defaultValue = "0") Integer page
-    ) {
-        return transactionService.getTransactionsBySenderDepartmentAndReceiverDepartment(
-                SHARPENING, receiverDepartment,page
-        );
-    }
-
 }

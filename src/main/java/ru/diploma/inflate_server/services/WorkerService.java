@@ -39,7 +39,7 @@ public class WorkerService {
         worker.setFirstName("");
         worker.setLastName("");
         worker.setJoinDate(LocalDate.now());
-        worker.setDepartment(Department.DEPARTMENT_15);
+        worker.setDepartment(Department.DEPARTMENT_19);
         worker.setType(WorkerType.WORKER);
         worker.setPatronymic("");
         return worker;

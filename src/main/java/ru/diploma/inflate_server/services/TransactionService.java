@@ -10,7 +10,13 @@ import ru.diploma.inflate_server.model.enums.Department;
 import ru.diploma.inflate_server.repositories.TransactionsRepository;
 import ru.diploma.inflate_server.webEntities.TransactionWEB;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+
+import static ru.diploma.inflate_server.model.enums.Department.DEPARTMENT_19;
+import static ru.diploma.inflate_server.model.enums.Department.SHARPENING;
 
 
 @Service
@@ -68,12 +74,34 @@ public class TransactionService {
     }
 
     public List<Transaction> getTransactionsBySurnameSenderAndReceiver(Long workerId, Integer page) {
-        Integer offset = page * 60;
+        Integer offset = page * 100;
         return transactionsRepository.findTransactionsBySurnameSenderAndReceiver(workerId, offset);
     }
 
-    public List<Transaction> getTransactionsBySenderDepartmentAndReceiverDepartment(Department senderDepartment, Department receiverDepartment, Integer page) {
-        Integer offset = page * 30;
-        return transactionsRepository.findAllTransactionsBySenderDepartmentAndReceiverDepartment(senderDepartment,receiverDepartment, offset);
+    public List<Transaction> getTransactionsBySenderDepartmentAndReceiverDepartment(Department senderDepartment,
+                                                                                    Department receiverDepartment,
+                                                                                    Integer page,
+                                                                                    String toolCode) {
+        Integer offset = page * 60;
+        return transactionsRepository
+                .findAllTransactionsBySenderDepartmentAndReceiverDepartment(senderDepartment,
+                        receiverDepartment,
+                        offset,
+                        toolCode);
     }
+
+    public List<Transaction> getTransactionsWithSharpening(String toolCode, Integer page) {
+        var result = new ArrayList<Transaction>();
+        var toSharpen = getTransactionsBySenderDepartmentAndReceiverDepartment(
+                DEPARTMENT_19, SHARPENING,page,toolCode
+        );
+        var fromSharpen = getTransactionsBySenderDepartmentAndReceiverDepartment(
+                SHARPENING, DEPARTMENT_19,page,toolCode
+        );
+        result.addAll(toSharpen);
+        result.addAll(fromSharpen);
+
+        return result.stream().sorted(Comparator.comparing(Transaction::getTransactionDate).reversed()).toList();
+    }
+
 }

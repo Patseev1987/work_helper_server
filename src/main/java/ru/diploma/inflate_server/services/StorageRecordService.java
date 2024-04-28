@@ -26,11 +26,7 @@ public class StorageRecordService {
 
 
     public List<StorageRecord> getStorageRecordsByWorkerIdWithParam(Long workerId, ToolType toolType, String toolCode) {
-        if (toolCode.equals(BLANK_CODE)) {
-            return storageRecordRepository.findAllByWorkerIdWithToolType(workerId, toolType);
-        } else {
             return storageRecordRepository.findAllByWorkerIdWithToolTypeAndCode(workerId, toolType, toolCode);
-        }
     }
 
     public List<StorageRecord> getAllStorageRecordsByWorkerLastName(Department department, String lastName) {

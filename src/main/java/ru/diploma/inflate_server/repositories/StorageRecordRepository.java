@@ -16,9 +16,6 @@ public interface StorageRecordRepository extends JpaRepository<StorageRecord, Lo
 
     List<StorageRecord> findAllByWorkerId(Long workerId);
 
-    @Query("from StorageRecord S where S.worker.id =:workerId and S.tool.type =:toolType and S.amount > 0")
-    List<StorageRecord> findAllByWorkerIdWithToolType(Long workerId, ToolType toolType);
-
     @Query("from StorageRecord S where S.worker.id =:workerId and S.tool.type =:toolType " +
             "and S.tool.code like %:toolCode% and S.amount > 0" )
     List<StorageRecord> findAllByWorkerIdWithToolTypeAndCode(Long workerId, ToolType toolType, String toolCode);
