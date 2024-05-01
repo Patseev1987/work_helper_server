@@ -1,5 +1,6 @@
 package ru.diploma.inflate_server.services;
 
+import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.diploma.inflate_server.model.Tool;
@@ -12,10 +13,6 @@ import java.util.List;
 public class ToolService {
     private final ToolRepository toolRepository;
 
-    public Tool save(Tool tool) {
-        return toolRepository.save(tool);
-    }
-
     public List<Tool> getAllTools() {
         return toolRepository.findAll();
     }
@@ -23,4 +20,9 @@ public class ToolService {
     public List<Tool> getToolByCodeLike(String code) {
         return toolRepository.findAllByCodeLike(code);
     }
+
+    }
+
+
+
 }

@@ -20,10 +20,6 @@ public class WEBMapper {
         tool.setAdditionalInfo(toolWEB.getAdditionalInfo());
         tool.setPlace(toolWEB.getPlace());
         tool.setCode(toolWEB.getCode());
-        if (!toolWEB.getControlDate().equals("null")) {
-            System.out.println(toolWEB.getControlDate());
-            tool.setControlDate(LocalDate.parse(toolWEB.getControlDate()));
-        }
         return tool;
     }
 

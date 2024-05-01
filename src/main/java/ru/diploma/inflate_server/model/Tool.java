@@ -28,7 +28,5 @@ public class Tool {
     private Place place;
     @Enumerated (EnumType.STRING)
     private ToolType type;
-    @Column(name = "control_date")
-    private LocalDate controlDate;
 
 }
