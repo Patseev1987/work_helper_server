@@ -74,29 +74,26 @@ public class TransactionService {
     }
 
     public List<Transaction> getTransactionsBySurnameSenderAndReceiver(Long workerId, Integer page) {
-        Integer offset = page * 100;
+        Integer offset = page * 200;
         return transactionsRepository.findTransactionsBySurnameSenderAndReceiver(workerId, offset);
     }
 
     public List<Transaction> getTransactionsBySenderDepartmentAndReceiverDepartment(Department senderDepartment,
                                                                                     Department receiverDepartment,
-                                                                                    Integer page,
                                                                                     String toolCode) {
-        Integer offset = page * 60;
         return transactionsRepository
                 .findAllTransactionsBySenderDepartmentAndReceiverDepartment(senderDepartment,
                         receiverDepartment,
-                        offset,
                         toolCode);
     }
 
-    public List<Transaction> getTransactionsWithSharpening(String toolCode, Integer page) {
+    public List<Transaction> getTransactionsWithSharpening(String toolCode) {
         var result = new ArrayList<Transaction>();
         var toSharpen = getTransactionsBySenderDepartmentAndReceiverDepartment(
-                DEPARTMENT_19, SHARPENING,page,toolCode
+                DEPARTMENT_19, SHARPENING,toolCode
         );
         var fromSharpen = getTransactionsBySenderDepartmentAndReceiverDepartment(
-                SHARPENING, DEPARTMENT_19,page,toolCode
+                SHARPENING, DEPARTMENT_19,toolCode
         );
         result.addAll(toSharpen);
         result.addAll(fromSharpen);

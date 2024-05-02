@@ -42,18 +42,17 @@ public class TransactionController {
     @GetMapping("/transactions/actionWithAnotherDepartments")
     public List<Transaction> getDecommissionedTools(
             @RequestParam(name = "anotherDepartment") Department anotherDepartment,
-            @RequestParam(name = "page",defaultValue = "0") Integer page,
             @RequestParam(name = "toolCode", defaultValue = "") String toolCode
     ) {
         if (anotherDepartment == STORAGE_OF_DECOMMISSIONED_TOOLS) {
             return transactionService.getTransactionsBySenderDepartmentAndReceiverDepartment(
-                    DEPARTMENT_19, STORAGE_OF_DECOMMISSIONED_TOOLS,page,toolCode
+                    DEPARTMENT_19, STORAGE_OF_DECOMMISSIONED_TOOLS,toolCode
             );
         } else if (anotherDepartment == SHARPENING) {
-            return transactionService.getTransactionsWithSharpening(toolCode,page);
+            return transactionService.getTransactionsWithSharpening(toolCode);
         }else {
             return transactionService.getTransactionsBySenderDepartmentAndReceiverDepartment(
-                    MAIN_STORAGE, DEPARTMENT_19,page,toolCode
+                    MAIN_STORAGE, DEPARTMENT_19,toolCode
             );
         }
     }
