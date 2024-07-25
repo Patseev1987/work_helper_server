@@ -14,13 +14,6 @@ import java.util.List;
 public class WorkerController {
     private final WorkerService workerService;
 
-    @GetMapping("/check_login")
-    public Worker checkLogin(
-            @RequestParam(name = "login") String login,
-            @RequestParam(name = "password") String password
-    ) {
-        return workerService.checkLogin(login, password);
-    }
 
     @GetMapping("/workers")
     public List<Worker> getAllWorkers() {

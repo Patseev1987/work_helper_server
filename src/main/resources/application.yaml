@@ -1,16 +1,25 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
     username: bogdan
-    password: Bogdan3622897
-    url: jdbc:mysql://109.196.164.168:3306/bogdan_db
-
+    password: bogdan
+    url: jdbc:postgresql://localhost:5432/server_db
+  application:
+    name: server-for-android-application
   jpa:
     properties:
       hibernate:
         show_sql: true
-        dialect:
-          MySQLDialect: org.hibernate.dialect.MySQLDialect
+        hbm2ddl:
+          auto: update
+
+
+
+
+jwt:
+  token:
+    validity: 86400
+  secret: united-engine-corporation
 
 server:
-  port: 1337
+  port: 8080

@@ -2,12 +2,14 @@ package ru.diploma.inflate_server.model;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.diploma.inflate_server.model.enums.ToolType;
 
 import java.time.LocalDate;
-@Data
+@Setter
+@Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "tools_table")

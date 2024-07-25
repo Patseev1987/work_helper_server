@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.diploma.inflate_server.model.Transaction;
 import ru.diploma.inflate_server.model.enums.Department;
 import ru.diploma.inflate_server.services.TransactionService;
-import ru.diploma.inflate_server.webEntities.TransactionWEB;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,11 +19,11 @@ import static ru.diploma.inflate_server.model.enums.Department.*;
 @AllArgsConstructor
 public class TransactionController {
     private final TransactionService transactionService;
-
-    @PostMapping("/transaction/create")
-    public Transaction createTransaction(@RequestBody TransactionWEB transaction) {
-        return transactionService.createTransaction(transaction);
-    }
+//
+//    @PostMapping("/transaction/create")
+//    public Transaction createTransaction(@RequestBody TransactionWEB transaction) {
+//        return transactionService.createTransaction(transaction);
+//    }
 
     @GetMapping("/transactions")
     public List<Transaction> getAllTransactions() {

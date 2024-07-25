@@ -1,14 +1,16 @@
 package ru.diploma.inflate_server.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
+@Builder
+@AllArgsConstructor
 @Table( name = "transactions_table")
 public class Transaction {
     @Id
