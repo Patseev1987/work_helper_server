@@ -16,6 +16,7 @@ import ru.diploma.inflate_server.auth.domain.User;
 import javax.crypto.SecretKey;
 import java.io.Serializable;
 import java.util.*;
+import java.util.function.Function;
 
 @Component
 public class JwtTokenService implements Serializable {
@@ -28,6 +29,7 @@ public class JwtTokenService implements Serializable {
 
     private final String ROLE_PREFIX = "ROLE_";
     private final String ROLE = "role";
+    private final String WORKER_ID = "worker_id";
 
 
 
@@ -35,6 +37,7 @@ public class JwtTokenService implements Serializable {
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(ROLE, user.getRole());
+        claims.put(WORKER_ID, user.getId());
         return Jwts.builder()
                 .claims(claims)
                 .subject(user.getUsername())
@@ -44,6 +47,15 @@ public class JwtTokenService implements Serializable {
                 .compact();
     }
 
+
+     <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = getAllClaimsFromToken(token);
+        return claimsResolver.apply(claims);
+    }
+
+    private Claims getAllClaimsFromToken(String token) {
+        return Jwts.parser().decryptWith(getSigningKey()).build().parseSignedClaims(token).getPayload();
+    }
 
     //check auth
     public Authentication getAuthentication(String token) {
