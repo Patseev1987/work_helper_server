@@ -30,8 +30,6 @@ public class AuthController {
         if (user == null ) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        String token = jwtTokenService.generateToken(user);
-        Long idWorker = jwtTokenService.
         return ResponseEntity.ok(new JwtTokenResponse(TOKEN_PREFIX + jwtTokenService.generateToken(user)));
     }
 

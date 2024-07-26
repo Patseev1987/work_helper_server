@@ -3,6 +3,8 @@ package ru.diploma.inflate_server.auth.services;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,12 +13,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.token.Sha512DigestUtils;
 import org.springframework.stereotype.Component;
 import ru.diploma.inflate_server.auth.domain.User;
+import ru.diploma.inflate_server.model.Worker;
+import ru.diploma.inflate_server.services.WorkerService;
 
 
 import javax.crypto.SecretKey;
 import java.io.Serializable;
 import java.util.*;
-import java.util.function.Function;
+
 
 @Component
 public class JwtTokenService implements Serializable {
@@ -26,11 +30,16 @@ public class JwtTokenService implements Serializable {
 
     @Value("${jwt.secret}")
     private String secret;
-
+    private final WorkerService workerService;
     private final String ROLE_PREFIX = "ROLE_";
     private final String ROLE = "role";
     private final String WORKER_ID = "worker_id";
+    private final String STORAGE_WORKER_ID = "storage_worker_id";
+    private final String DEPARTMENT = "department";
 
+    public JwtTokenService(WorkerService workerService) {
+        this.workerService = workerService;
+    }
 
 
     // generate new token
@@ -38,6 +47,10 @@ public class JwtTokenService implements Serializable {
         Map<String, Object> claims = new HashMap<>();
         claims.put(ROLE, user.getRole());
         claims.put(WORKER_ID, user.getId());
+        Worker worker = workerService.getWorkerById(user.getId());
+        Long storageWorkerId = workerService.getStorageWorkerByDepartment(worker.getDepartment()).getId();
+        claims.put(STORAGE_WORKER_ID, storageWorkerId);
+        claims.put(DEPARTMENT, worker.getDepartment());
         return Jwts.builder()
                 .claims(claims)
                 .subject(user.getUsername())
@@ -47,11 +60,6 @@ public class JwtTokenService implements Serializable {
                 .compact();
     }
 
-
-     <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = getAllClaimsFromToken(token);
-        return claimsResolver.apply(claims);
-    }
 
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().decryptWith(getSigningKey()).build().parseSignedClaims(token).getPayload();

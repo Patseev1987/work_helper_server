@@ -45,6 +45,10 @@ public class WorkerService {
 //        return worker;
 //    }
 
+    public Worker getWorkerById(Long id) {
+        return workerRepository.findById(id).orElseThrow();
+    }
+
     public Worker getStorageWorkerByDepartment(Department department) {
         return workerRepository.findStorageWorkerByDepartment(department).orElseThrow();
     }
