@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . /app/.
 RUN mvn -f /app/pom.xml clean package -Dmaven.test.skip=true
 
-FROM bellsoft/liberica-openjdk-debian:17
+FROM --platform=linux/amd64 eclipse-temurin:21
 WORKDIR /app
 COPY --from=builder /app/target/*.jar /app/*.jar
 EXPOSE 8080
