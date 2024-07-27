@@ -30,4 +30,9 @@ public class WorkerController {
         return workerService.getWorkersByDepartment(department);
     }
 
+    @GetMapping("/worker_by_id/{id}")
+    public Worker getWorkerById(@PathVariable(name = "id") Long id){
+        return workerService.getWorkerById(id);
+    }
+
 }

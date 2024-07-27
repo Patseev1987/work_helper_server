@@ -21,14 +21,12 @@ import static ru.diploma.inflate_server.model.enums.Department.SHARPENING;
 public class TransactionService {
     private final TransactionsRepository transactionsRepository;
     private final StorageRecordService storageRecordService;
-//    private final WEBMapper mapper;
-//
-//    @Transactional
-//    public Transaction createTransaction(TransactionWEB transactionWEB) {
-//        var transaction = mapper.transactionWEBToTransaction(transactionWEB);
-//        changeStorageRecord(transaction);
-//        return transactionsRepository.save(transaction);
-//    }
+
+    @Transactional
+    public Transaction createTransaction(Transaction transaction) {
+        changeStorageRecord(transaction);
+        return transactionsRepository.save(transaction);
+    }
 
 
     public List<Transaction> getAllTransactions() {

@@ -32,9 +32,9 @@ public class JwtTokenService implements Serializable {
     private String secret;
     private final WorkerService workerService;
     private final String ROLE_PREFIX = "ROLE_";
-    private final String ROLE = "role";
+    private final String ROLE = "ROLE";
+    private final String WORKER_TYPE = "worker_type";
     private final String WORKER_ID = "worker_id";
-    private final String STORAGE_WORKER_ID = "storage_worker_id";
     private final String DEPARTMENT = "department";
 
     public JwtTokenService(WorkerService workerService) {
@@ -45,11 +45,9 @@ public class JwtTokenService implements Serializable {
     // generate new token
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(ROLE, user.getRole());
         claims.put(WORKER_ID, user.getId());
         Worker worker = workerService.getWorkerById(user.getId());
-        Long storageWorkerId = workerService.getStorageWorkerByDepartment(worker.getDepartment()).getId();
-        claims.put(STORAGE_WORKER_ID, storageWorkerId);
+        claims.put(WORKER_TYPE, worker.getType());
         claims.put(DEPARTMENT, worker.getDepartment());
         return Jwts.builder()
                 .claims(claims)
@@ -60,11 +58,6 @@ public class JwtTokenService implements Serializable {
                 .compact();
     }
 
-
-    private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().decryptWith(getSigningKey()).build().parseSignedClaims(token).getPayload();
-    }
-
     //check auth
     public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parser()
@@ -72,7 +65,6 @@ public class JwtTokenService implements Serializable {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-
 
         String username = claims.getSubject();
         String role = claims.get(ROLE, String.class);

@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "storage_record_table")
+@Table(name = "storage_records_table")
 
 public class StorageRecord {
     @Id

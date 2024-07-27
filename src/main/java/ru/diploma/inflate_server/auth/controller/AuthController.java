@@ -11,6 +11,10 @@ import ru.diploma.inflate_server.auth.dto.UserDTOForSingUp;
 import ru.diploma.inflate_server.auth.dto.UserDTOForUpdate;
 import ru.diploma.inflate_server.auth.services.JwtTokenService;
 import ru.diploma.inflate_server.auth.services.LoginService;
+import ru.diploma.inflate_server.model.enums.Department;
+import ru.diploma.inflate_server.model.enums.WorkerType;
+
+import java.time.LocalDate;
 
 
 @RestController()
@@ -27,7 +31,7 @@ public class AuthController {
     @PostMapping("/sign-in")
     public ResponseEntity<JwtTokenResponse> login(@RequestBody UserDTOForSingIn userDTO) {
         var user = loginService.login(userDTO).orElse(null);
-        if (user == null ) {
+        if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(new JwtTokenResponse(TOKEN_PREFIX + jwtTokenService.generateToken(user)));
@@ -38,7 +42,7 @@ public class AuthController {
     public ResponseEntity<JwtTokenResponse> singUp(@RequestBody UserDTOForSingUp userDTO) {
         var newUser = loginService.register(userDTO);
         return ResponseEntity.ok(
-               new JwtTokenResponse(TOKEN_PREFIX + jwtTokenService.generateToken(newUser)));
+                new JwtTokenResponse(TOKEN_PREFIX + jwtTokenService.generateToken(newUser)));
     }
 
     //change password
@@ -46,5 +50,20 @@ public class AuthController {
     public ResponseEntity<String> updatePassword(@RequestBody UserDTOForUpdate userDTO) {
         loginService.updatePassword(userDTO);
         return ResponseEntity.ok(PASSWORD_UPDATE);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<UserDTOForSingUp> test() {
+        return ResponseEntity.ok(new UserDTOForSingUp(
+                        "b",
+                        "1",
+                        "Bogdan",
+                        "Patseev",
+                        "Andreevich",
+                        WorkerType.WORKER,
+                        LocalDate.now(),
+                        Department.DEPARTMENT_19
+                )
+        );
     }
 }
