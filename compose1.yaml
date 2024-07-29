@@ -1,0 +1,17 @@
+
+version: '2.1'
+services:
+  database:
+    container_name: main-server-database
+    image: bitnami/postgresql:13.14.0
+    environment:
+      - POSTGRES_USER=bogdan
+      - POSTGRES_PASSWORD=bogdan
+      - POSTGRES_DB=server_db
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./data.sql:/docker-entrypoint-initdb.d/2-data.sql
+    ports:
+      - "5432:5432"
+
+

@@ -18,7 +18,7 @@ spring:
 
 jwt:
   token:
-    validity: 86400
+    validity: 100
   secret: united-engine-corporation
 
 server:

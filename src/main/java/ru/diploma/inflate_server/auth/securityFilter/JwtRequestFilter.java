@@ -1,6 +1,7 @@
 package ru.diploma.inflate_server.auth.securityFilter;
 
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.diploma.inflate_server.auth.services.JwtTokenService;
+import ru.diploma.inflate_server.exceptions.MyCustomException;
 
 
 import java.io.IOException;
@@ -28,9 +30,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final String AUTHORIZATION = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
 
-
-
-    //filter foe check auth
+    //filter for check auth
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -44,6 +44,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 Authentication authentication = jwtTokenService.getAuthentication(tokenWithoutBearer);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+        }catch (ExpiredJwtException e) {
+            response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+            return;
         } catch (Exception e) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return;
