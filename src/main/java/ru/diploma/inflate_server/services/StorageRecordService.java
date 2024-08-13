@@ -51,4 +51,12 @@ public class StorageRecordService {
             return records.get(0).getAmount();
         }
     }
+
+    public List<StorageRecord> getAllRecordsWithTool(String toolCode) {
+        return storageRecordRepository.findAllRecordsWithTool(toolCode);
+    }
+
+    public List<StorageRecord> getAllRecordsWithToolType(Department department, String toolCode) {
+        return storageRecordRepository.findAllRecordsWithToolInDepartment(toolCode, department);
+    }
 }

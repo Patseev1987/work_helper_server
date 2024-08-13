@@ -80,4 +80,15 @@ public class JwtTokenService implements Serializable {
         byte[] keyBytes = Sha512DigestUtils.sha(secret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+
+    //get role from token
+    public String getDepartment(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return claims.get(DEPARTMENT, String.class);
+    }
 }

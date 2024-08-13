@@ -20,6 +20,8 @@ VALUES (1, 'Андрей', 'Иванов', 'Иванович', 'WORKER', '2019-0
        (8, 'ADMIN', 'ADMIN', 'ADMIN', 'ADMIN', '1900-03-01', 'DEPARTMENT_19', 'admin'),
        (9, 'Списание', 'Списание', 'Списание', 'STORAGE_WORKER', '1900-03-01', 'STORAGE_OF_DECOMMISSIONED_TOOLS',
         'bad_tool');
+(10, 'Главный склад', 'Главный склад', 'Главный склад', 'STORAGE_WORKER', '1900-03-01', 'MAIN_STORAGE',
+    'main_storage');
 
 INSERT INTO tools_table (code, additional_info, description, icon, name, place_column, place_row, place_shelf, type)
 VALUES ('2004-9060', 'some info', 'some inner',

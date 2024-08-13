@@ -1,7 +1,11 @@
 package ru.diploma.inflate_server.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.RequestContext;
+import ru.diploma.inflate_server.auth.domain.Role;
+import ru.diploma.inflate_server.auth.services.JwtTokenService;
 import ru.diploma.inflate_server.model.StorageRecord;
 import ru.diploma.inflate_server.model.enums.Department;
 import ru.diploma.inflate_server.model.enums.ToolType;
@@ -14,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StorageRecordController {
     private final StorageRecordService storageRecordService;
+    private final JwtTokenService jwtTokenService;
 
     @GetMapping ("/records/workerId")
     public List<StorageRecord> getToolsByIdWorker(
@@ -47,5 +52,23 @@ public class StorageRecordController {
                 department,
                 workerLastName
         );
+    }
+
+    @GetMapping ("/records/storageWorker/{toolCode}")
+    public List<StorageRecord> getRecordsByToolCode(
+            @PathVariable ("toolCode") String toolCode
+    ){
+        return storageRecordService.getAllRecordsWithTool(toolCode);
+    }
+
+    @GetMapping ("/records/worker/{toolCode}")
+    public List<StorageRecord> getRecordsByToolCodeInDepartment(
+            @PathVariable ("toolCode") String toolCode,
+            @RequestHeader (name = HttpHeaders.AUTHORIZATION) String token
+    ){
+        System.out.println("!!!!!!!!!!!!**!**!*!*!**!*!*!*!*\n"+token);
+        String departmentValue = jwtTokenService.getDepartment(token);
+        Department department = Department.valueOf(departmentValue);
+        return storageRecordService.getAllRecordsWithToolType(department, toolCode);
     }
 }
