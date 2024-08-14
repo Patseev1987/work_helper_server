@@ -26,9 +26,9 @@ public interface StorageRecordRepository extends JpaRepository<StorageRecord, Lo
     @Query("from StorageRecord S where S.worker =:worker and S.tool =:tool")
     Optional<StorageRecord> findStorageRecordByWorkerAndTool(Worker worker, Tool tool);
 
-    @Query("from StorageRecord S where S.tool.code like %:toolCode%")
+    @Query("from StorageRecord S where S.tool.code like %:toolCode% and  S.amount > 0")
     List<StorageRecord> findAllRecordsWithTool(String toolCode );
 
-    @Query("from StorageRecord S where S.tool.code like %:toolCode% and S.worker.department =:department")
+    @Query("from StorageRecord S where S.tool.code like %:toolCode% and S.worker.department =:department and S.amount > 0")
     List<StorageRecord> findAllRecordsWithToolInDepartment(String toolCode, Department department );
 }

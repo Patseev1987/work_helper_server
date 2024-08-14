@@ -67,6 +67,7 @@ public class StorageRecordController {
             @RequestHeader (name = HttpHeaders.AUTHORIZATION) String token
     ){
         System.out.println("!!!!!!!!!!!!**!**!*!*!**!*!*!*!*\n"+token);
+        token = token.replace("Bearer ", "");
         String departmentValue = jwtTokenService.getDepartment(token);
         Department department = Department.valueOf(departmentValue);
         return storageRecordService.getAllRecordsWithToolType(department, toolCode);

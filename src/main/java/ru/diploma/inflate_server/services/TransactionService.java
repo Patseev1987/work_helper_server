@@ -31,7 +31,7 @@ public class TransactionService {
 
 
      {
-      //  init();
+        init();
     }
 
 
@@ -269,7 +269,7 @@ public class TransactionService {
 
                 var transactions = List.of(tr1,tr2,tr3,tr4,tr5,tr6,tr7,tr8,tr9,tr10,tr11,tr12,tr13,tr14);
 
-                transactionsRepository.saveAll(transactions);
+                transactions.forEach(this::createTransaction);
 
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
